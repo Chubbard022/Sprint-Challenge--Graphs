@@ -48,52 +48,25 @@ class Queue():
         # perform a BFS of the dictionary to find closest node with an unexplored exit
         # steer player back to that node and repeate DFT
 
+
+reverse_direction = {'n': 's', 'e': 'w', 's': 'n','w': 'e'}
 traversalPath = []
+path_reversed = []
 
-def BFS(maze_direction, starting_room):
-    
-    queue = Queue()
-    visited = set()
-    queue.enqueue([starting_room,])
-    shortest_directions = []
+rooms = {}
+room_dictionary = {}
 
-    #will return false when size is less than one
-    while queue.size():
-    
-        path = queue.dequeue()
-        vertex = path[-1]
+#putting player in the first room
+rooms[0] = player.currentRoom.getExits()
+room_dictionary[0] = player.currentRoom.getExits()
 
-        if vertex is '?':
-            #do something
-            pass
-        if vertex not in visited:
-            #do something
-            pass
-    #go backwards along given path
-    while path.size():
-        #go backwards
+#will return false when the rooms have all been visited
+while len(rooms) < len(roomGraph)-1:
+    if player.currentRoom.id not in rooms:
         pass
-    
-    #return the shortest path
-    return shortest_directions
-
-#this method will help with DFT reversal of directions
-def reverse_direction(direction):
-    if direction is 'n':
-        return 's'
-    if direction is 'e':
-        return 'w'
-    if direction is 's':
-        return 'n'
-    if direction is 'w':
-        return 'e'
-
-def DFT():
-    pass
-
-
-
-
+    #reversing out
+    while len(room_dictionary[player.currentRoom.id]) < 1: 
+        pass
 
 
 # TRAVERSAL TEST
