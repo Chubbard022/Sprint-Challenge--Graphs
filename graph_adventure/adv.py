@@ -20,8 +20,80 @@ world.printRooms()
 player = Player("Name", world.startingRoom)
 
 
-# FILL THIS IN
-traversalPath = ['n', 's']
+
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+# player.currentRoom.id starts at 0 and stores the current room id
+# player.currentRoom.getExits() will return the list of exits possible for the node
+# player.travel(direction) - this will allow the player to move around the rooms
+
+# undirected cyclical graph
+# rooms are nodes connected by edges
+# need a dictionary to track which nodes have been visited and how they're connected
+#  do a DFT to traverse graph to unvisited nodes
+    # pick random unexplored direction from players' current room
+    # update visited dictionary, noting adjacencies/edges
+    # when you reach a dead end, or all nodes around you have been visited, 
+        # perform a BFS of the dictionary to find closest node with an unexplored exit
+        # steer player back to that node and repeate DFT
+
+traversalPath = []
+
+def BFS(maze_direction, starting_room):
+    
+    queue = Queue()
+    visited = set()
+    queue.enqueue([starting_room,])
+    shortest_directions = []
+
+    #will return false when size is less than one
+    while queue.size():
+    
+        path = queue.dequeue()
+        vertex = path[-1]
+
+        if vertex is '?':
+            #do something
+            pass
+        if vertex not in visited:
+            #do something
+            pass
+    #go backwards along given path
+    while path.size():
+        #go backwards
+        pass
+    
+    #return the shortest path
+    return shortest_directions
+
+#this method will help with DFT reversal of directions
+def reverse_direction(direction):
+    if direction is 'n':
+        return 's'
+    if direction is 'e':
+        return 'w'
+    if direction is 's':
+        return 'n'
+    if direction is 'w':
+        return 'e'
+
+def DFT():
+    pass
+
+
+
+
 
 
 # TRAVERSAL TEST
