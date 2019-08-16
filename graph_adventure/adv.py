@@ -63,10 +63,24 @@ room_dictionary[0] = player.currentRoom.getExits()
 #will return false when the rooms have all been visited
 while len(rooms) < len(roomGraph)-1:
     if player.currentRoom.id not in rooms:
-        pass
+        rooms[player.currentRoom.id] = player.currentRoom.getExits()
+        room_dictionary[player.currentRoom.id] = player.currentRoom.getExits()
+        lastDirection = path_reversed[-1]
+        room_dictionary[player.currentRoom.id].remove(lastDirection)
+
+
     #reversing out
     while len(room_dictionary[player.currentRoom.id]) < 1: 
-        pass
+        go_backwards = path_reversed.pop()
+
+        traversalPath.append(go_backwards)
+        player.travel(go_backwards)
+    exit_direction = room_dictionary[player.currentRoom.id].pop(0)
+    traversalPath.append(exit_direction)
+    path_reversed.append(reverse_direction[exit_direction])
+    player.travel(exit_direction)
+
+        
 
 
 # TRAVERSAL TEST
