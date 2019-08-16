@@ -20,8 +20,67 @@ world.printRooms()
 player = Player("Name", world.startingRoom)
 
 
-# FILL THIS IN
-traversalPath = ['n', 's']
+
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+# player.currentRoom.id starts at 0 and stores the current room id
+# player.currentRoom.getExits() will return the list of exits possible for the node
+# player.travel(direction) - this will allow the player to move around the rooms
+
+# undirected cyclical graph
+# rooms are nodes connected by edges
+# need a dictionary to track which nodes have been visited and how they're connected
+#  do a DFT to traverse graph to unvisited nodes
+    # pick random unexplored direction from players' current room
+    # update visited dictionary, noting adjacencies/edges
+    # when you reach a dead end, or all nodes around you have been visited, 
+        # perform a BFS of the dictionary to find closest node with an unexplored exit
+        # steer player back to that node and repeate DFT
+
+
+reverse_direction = {'n': 's', 'e': 'w', 's': 'n','w': 'e'}
+traversalPath = []
+path_reversed = []
+
+rooms = {}
+room_dictionary = {}
+
+#putting player in the first room
+rooms[0] = player.currentRoom.getExits()
+room_dictionary[0] = player.currentRoom.getExits()
+
+#will return false when the rooms have all been visited
+while len(rooms) < len(roomGraph)-1:
+    if player.currentRoom.id not in rooms:
+        rooms[player.currentRoom.id] = player.currentRoom.getExits()
+        room_dictionary[player.currentRoom.id] = player.currentRoom.getExits()
+        lastDirection = path_reversed[-1]
+        room_dictionary[player.currentRoom.id].remove(lastDirection)
+
+
+    #reversing out
+    while len(room_dictionary[player.currentRoom.id]) < 1: 
+        go_backwards = path_reversed.pop()
+
+        traversalPath.append(go_backwards)
+        player.travel(go_backwards)
+    exit_direction = room_dictionary[player.currentRoom.id].pop(0)
+    traversalPath.append(exit_direction)
+    path_reversed.append(reverse_direction[exit_direction])
+    player.travel(exit_direction)
+
+        
 
 
 # TRAVERSAL TEST
